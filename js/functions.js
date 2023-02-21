@@ -1,11 +1,13 @@
-// Функция для проверки длины строки true false
+
 
 const counter = 10;
 const string = '-7 Лёша на полке клопа нашёл 7-';
+
+// Функция для проверки длины строки true false
+
 const checkLengthString = (str, count) => String(str).length <= count;
 
 checkLengthString(string, counter);
-
 
 // Функция для проверки, является ли строка палиндромом.
 

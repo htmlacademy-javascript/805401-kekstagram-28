@@ -1,2 +1,2 @@
-import './util.js';
-// import './function.js';
+import './functions.js';
+// import './func.js';
