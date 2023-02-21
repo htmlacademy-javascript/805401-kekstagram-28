@@ -3,14 +3,14 @@ const string = '-7 Лёша на полке клопа нашёл 7-';
 
 // Функция для проверки длины строки true false
 
-const checkLengthString = (str, count) => String(str).length <= count;
+const checkLengthString = (str, count) => str.length <= count;
 
 checkLengthString(string, counter);
 
 // Функция для проверки, является ли строка палиндромом.
 
 const checkStringPalindrome = (str) => {
-  str = str.toLowerCase().replace(/\s/g, '');
+  str = String(str).toLowerCase().replace(/\s/g, '');
   return str === str.split('').reverse().join('');
 };
 
