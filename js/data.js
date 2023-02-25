@@ -63,6 +63,10 @@ const generatePhotoUrl = createRandomIdFromRangeGenerator(1, GENERATION_COUNT);
 // Переменная для генерации URL: фотографии аватара
 const generateAvatarUrl = createRandomIdFromRangeGenerator(1, 6);
 
+// Функция счетчик коментариев от 1 до 3
+
+const generateCommentsCount = () => getRandomInteger(1, 3);
+
 // Функция для создания случайного обьекта коментария для фотографии
 
 const createRandomMessages = () => ({
@@ -72,7 +76,8 @@ const createRandomMessages = () => ({
   name: getRandomArrayElement(NAMES),
 });
 
-const randomMessageGallery = Array.from({ length: 3 }, createRandomMessages);
+// Временная заметка, тут нужна функция только так данные живые, еслb переменная то тащим одни и теже значения в обьект
+const randomMessagesGallery = () => Array.from({ length: generateCommentsCount()}, createRandomMessages);
 
 // Функция для создания случайного обьекта фотографии
 
@@ -81,12 +86,12 @@ const createPhotoPost = () => ({
   url: `photos/${generatePhotoUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),
-  comments: randomMessageGallery,
+  comments: randomMessagesGallery(),
 });
 
-const randomPhotoGallery = Array.from({ length: GENERATION_COUNT }, createPhotoPost);
+const randomPhotoGallery = () => Array.from({ length: GENERATION_COUNT }, createPhotoPost);
 
 // eslint-disable-next-line no-console
-console.log(randomPhotoGallery);
+console.log(randomPhotoGallery());
 
 export { createPhotoPost, randomPhotoGallery };
