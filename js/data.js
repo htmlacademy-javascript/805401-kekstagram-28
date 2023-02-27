@@ -73,7 +73,7 @@ const createRandomMessages = () => ({
 });
 
 // Функция отрисовки коментариев фото галереи
-// Временная заметка, тут нужна функция, только так данные живые, если переменная то тащим одни и теже значения в обьект
+
 const randomMessagesGallery = () => Array.from({ length: getRandomInteger(1, 3)}, createRandomMessages);
 
 // Функция для создания случайного обьекта фотографии
