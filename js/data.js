@@ -90,7 +90,4 @@ const createPhotoPost = () => ({
 
 const randomPhotoGallery = () => Array.from({ length: GENERATION_COUNT }, createPhotoPost);
 
-// eslint-disable-next-line no-console
-console.log(randomPhotoGallery());
-
 export { randomPhotoGallery };
