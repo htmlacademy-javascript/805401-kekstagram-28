@@ -65,7 +65,7 @@ const generateAvatarUrl = () => getRandomInteger(1, 6);
 
 // Функция для создания случайного обьекта коментария для фотографии
 
-const createRandomMessages = () => ({
+const createRandomMessage = () => ({
   id: generateCommentId(),
   avatar: `img/avatar-${generateAvatarUrl()}.svg`,
   message: getRandomArrayElement(MESSAGES),
@@ -74,7 +74,7 @@ const createRandomMessages = () => ({
 
 // Функция отрисовки коментариев фото галереи
 
-const randomMessagesGallery = () => Array.from({ length: getRandomInteger(1, 3)}, createRandomMessages);
+const getRandomMessagesGallery = () => Array.from({ length: getRandomInteger(1, 3)}, createRandomMessage);
 
 // Функция для создания случайного обьекта фотографии
 
@@ -83,11 +83,11 @@ const createPhotoPost = () => ({
   url: `photos/${generatePhotoUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),
-  comments: randomMessagesGallery(),
+  comments: getRandomMessagesGallery(),
 });
 
 // Функция отрисовки фото галереи
 
-const randomPhotoGallery = () => Array.from({ length: GENERATION_COUNT }, createPhotoPost);
+const getRandomPhotoGallery = () => Array.from({ length: GENERATION_COUNT }, createPhotoPost);
 
-export { randomPhotoGallery };
+export { getRandomPhotoGallery };
