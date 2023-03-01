@@ -1,2 +1,7 @@
-import './functions.js';
-import './data.js';
+// Импорты модулей
+
+import {getRandomPhotoGallery} from './data.js';
+
+// Вызовы функций
+
+getRandomPhotoGallery();
