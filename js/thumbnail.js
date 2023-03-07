@@ -1,4 +1,4 @@
-import { getRandomPhotoGallery, getRandomMessagesGallery } from './data.js';
+import { getRandomPhotoGallery, } from './data.js';
 
 // На основе временных данных для разработки и шаблона #picture создайте DOM-элементы, соответствующие фотографиям, и заполните их данными:
 
@@ -11,32 +11,24 @@ pictureTitle.classList.remove('visually-hidden');
 // Находим шаблон изображения
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const pictureItoms = getRandomPhotoGallery();
+const pictureItom = getRandomPhotoGallery();
 
-pictureItoms.forEach((element) => {
+const pictureItomFragment = document.createDocumentFragment();
+
+pictureItom.forEach(({ url, comments, likes }) => {
   // Клонируем шаблон
   const pictureElement = pictureTemplate.cloneNode(true);
   // Находим изображения
-  pictureElement.querySelector('.picture__img').src = element.url;
+  pictureElement.querySelector('.picture__img').src = url;
   // Находим количество коментариев
-  pictureElement.querySelector('.picture__comments').textContent = element.comments.length;
+  pictureElement.querySelector('.picture__comments').textContent = comments.length;
   // Находим количество лайков
-  pictureElement.querySelector('.picture__likes').textContent = element.likes;
+  pictureElement.querySelector('.picture__likes').textContent = likes;
 
   // Отрисовываем шаблон в блок picture
-  picture.append(pictureElement);
-
-  console.log(pictureElement);
+  pictureItomFragment.append(pictureElement);
 });
 
-
-
-
-// Адрес изображения url подставьте как атрибут src изображения.
-
-// Количество лайков likes выведите в блок .picture__likes.
-
-// Количество комментариев comments выведите в блок .picture__comments.
-
-// Отрисуйте сгенерированные DOM-элементы в блок .pictures. Для вставки элементов используйте DocumentFragment.
+// Отрисуем сгенерированные DOM-элементы в блок .pictures
+picture.append(pictureItomFragment);
 
