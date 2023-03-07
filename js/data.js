@@ -90,4 +90,4 @@ const createPhotoPost = () => ({
 
 const getRandomPhotoGallery = () => Array.from({ length: GENERATION_COUNT }, createPhotoPost);
 
-export { getRandomPhotoGallery };
+export { getRandomPhotoGallery, getRandomMessagesGallery };
