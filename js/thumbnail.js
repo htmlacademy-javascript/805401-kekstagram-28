@@ -1,34 +1,53 @@
-import { getRandomPhotoGallery, } from './data.js';
+import { getRandomPhotoGallery } from './data.js';
 
 // На основе временных данных для разработки и шаблона #picture создайте DOM-элементы, соответствующие фотографиям, и заполните их данными:
 
-const picture = document.querySelector('.pictures');
-const pictureTitle = picture.querySelector('.pictures__title');
-
-// Временно показываем блок изображений
-pictureTitle.classList.remove('visually-hidden');
+// находим поле для вставки миниатюр
+const picturesСontainer = document.querySelector('.pictures');
+// Находим заголовок
+const picturesTitle = picturesСontainer.querySelector('.pictures__title');
 
 // Находим шаблон изображения
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const pictureItom = getRandomPhotoGallery();
+// Присваеваем вызов функции, переменнной pictureItem
+const pictureElements = getRandomPhotoGallery();
 
-const pictureItomFragment = document.createDocumentFragment();
+// Создаём функцию отрисовки миниатюр
+// Вопрос ?? Нужны ли этой функции аргументы или можно оставить так??
+// Если аргументы нужны, то придется переменные экспортировать в main.js чтобы вызывать её оттуда с аргументами?? и правильно ли это??
 
-pictureItom.forEach(({ url, comments, likes }) => {
-  // Клонируем шаблон
-  const pictureElement = pictureTemplate.cloneNode(true);
-  // Находим изображения
-  pictureElement.querySelector('.picture__img').src = url;
-  // Находим количество коментариев
-  pictureElement.querySelector('.picture__comments').textContent = comments.length;
-  // Находим количество лайков
-  pictureElement.querySelector('.picture__likes').textContent = likes;
+const renderThumbnails = () => {
 
-  // Отрисовываем шаблон в блок picture
-  pictureItomFragment.append(pictureElement);
-});
+  // Показываем или убираем заголовок по условию
+  if (picturesСontainer) {
+    picturesTitle.classList.remove('visually-hidden');
+  } else {
+    picturesTitle.classList.add('visually-hidden');
+  }
 
-// Отрисуем сгенерированные DOM-элементы в блок .pictures
-picture.append(pictureItomFragment);
+  // Создаём фрагмент
+  const anotherUserPhotoFragment = document.createDocumentFragment();
+
+  pictureElements.forEach(({ url, comments, likes }) => {
+
+    // Клонируем шаблон
+    const pictureElement = pictureTemplate.cloneNode(true);
+    // Находим изображения
+    pictureElement.querySelector('.picture__img').src = url;
+    // Находим количество коментариев
+    pictureElement.querySelector('.picture__comments').textContent = comments.length;
+    // Находим количество лайков
+    pictureElement.querySelector('.picture__likes').textContent = likes;
+
+    // Отрисовываем шаблон в блок picture
+    anotherUserPhotoFragment.append(pictureElement);
+  });
+
+  // Отрисуем сгенерированные DOM-элементы в блок .pictures
+  return picturesСontainer.append(anotherUserPhotoFragment);
+
+};
+
+export { renderThumbnails };
 
