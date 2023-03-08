@@ -19,6 +19,7 @@ const pictureElements = getRandomPhotoGallery();
 
 const renderThumbnails = () => {
 
+  // Не понял по макету, нужно ли отображать заголовок??
   // Показываем или убираем заголовок по условию
   if (picturesСontainer) {
     picturesTitle.classList.remove('visually-hidden');
