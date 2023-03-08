@@ -42,4 +42,9 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 // Экспорты функций
 
-export { getRandomInteger, createRandomIdFromRangeGenerator, createIdGenerator, getRandomArrayElement };
+export {
+  getRandomInteger,
+  createRandomIdFromRangeGenerator,
+  createIdGenerator,
+  getRandomArrayElement,
+};
