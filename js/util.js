@@ -40,6 +40,10 @@ function createIdGenerator() {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+// функция проверки срабатывания клавиши Esc
+
+const isEscapeKeydown = (evt) => evt.key === 'Escape';
+
 // Экспорты функций
 
 export {
@@ -47,4 +51,5 @@ export {
   createRandomIdFromRangeGenerator,
   createIdGenerator,
   getRandomArrayElement,
+  isEscapeKeydown,
 };

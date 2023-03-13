@@ -14,7 +14,7 @@ const renderThumbnails = () => {
   // Создаём фрагмент
   const anotherUserPhotoFragment = document.createDocumentFragment();
 
-  pictureElements.forEach(({ url, description , comments, likes}) => {
+  pictureElements.forEach(({ url, description, comments, likes }) => {
 
     // Клонируем шаблон
     const pictureElement = pictureTemplate.cloneNode(true);
@@ -36,5 +36,5 @@ const renderThumbnails = () => {
 
 };
 
-export { renderThumbnails };
+export { renderThumbnails, };
 

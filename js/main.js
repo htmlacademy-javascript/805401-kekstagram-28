@@ -1,7 +1,3 @@
 // Импорты модулей
 
-import { renderThumbnails } from './thumbnail.js';
-
-// Вызовы функций
-
-renderThumbnails();
+import './big-picture.js';
