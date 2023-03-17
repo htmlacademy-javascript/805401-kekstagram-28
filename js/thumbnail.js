@@ -1,4 +1,4 @@
-import { renderBigPictureAndOpenFullScreen } from './big-picture.js';
+import { renderBigPicture } from './big-picture.js';
 
 // находим поле для вставки миниатюр
 const picturesСontainer = document.querySelector('.pictures');
@@ -21,7 +21,7 @@ const createThumbnail = (picture) => {
   pictureElement.querySelector('.picture__likes').textContent = picture.likes;
 
   pictureElement.addEventListener('click', () => {
-    renderBigPictureAndOpenFullScreen(picture);
+    renderBigPicture(picture);
   });
 
   return pictureElement;

@@ -40,23 +40,9 @@ const createComment = (comment) => {
   return commentElement;
 };
 
-// Функция открывающая большое изображение
-
-const onOpenBigPictureClick = (evt) => {
-  evt.preventDefault();
-  // Делигирование событий
-  if (evt.target.closest('.picture')) {
-    // Действия
-    // console.log(evt.target); // в консоль выводится элемент
-    // Показываем большое изображение
-    bigPicture.classList.remove('hidden');
-    body.classList.add('modal-open');
-  }
-};
-
 // Функция отрисовки большого изображения
 
-const renderBigPictureAndOpenFullScreen = (picture) => {
+const renderBigPicture = (picture) => {
   socialComments.innerHTML = '';
   socialCommentCount.classList.add('hidden');
   btnCommentsLoader.classList.add('hidden');
@@ -67,29 +53,59 @@ const renderBigPictureAndOpenFullScreen = (picture) => {
   renderElements(picture.comments, createComment, socialComments);
 };
 
+// Функция удаления обработчиков событий
+
+const onRemoveClickAndKeydownBigPicture = () => {
+  document.removeEventListener('keydown', onCloseBigPictureKeydown);
+  btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
+  // Вызовы обработчикa событий открытия окна
+  thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
+};
+
+// Функция открывающая большое изображение
+
+function onOpenBigPictureClick(evt) {
+  evt.preventDefault();
+  // Делигирование событий
+  if (evt.target.closest('.picture')) {
+
+    // Показываем большое изображение
+    bigPicture.classList.remove('hidden');
+    body.classList.add('modal-open');
+
+    // Вызов обработчика событий закрытия окна клавишей Esc
+    document.addEventListener('keydown', onCloseBigPictureKeydown);
+    // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
+    btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
+    // Удаление обработчикa событий открытия окна
+    thumbnaiPicture.removeEventListener('click', onOpenBigPictureClick);
+  }
+}
+
 // Функция скрывает большое изображение по клику
 
-const onCloseBigPictureClick = () => {
+function onCloseBigPictureClick() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-};
+  // Вызываем функцию удвления обработчиков
+  onRemoveClickAndKeydownBigPicture();
+}
 
 // Функция скрывает большое изображение по нажатию клавиши
 
-const onCloseBigPictureKeydown = (evt) => {
+function onCloseBigPictureKeydown(evt) {
   if (isEscapeKeydown(evt)) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
+    // Вызываем функцию удвления обработчиков
+    onRemoveClickAndKeydownBigPicture();
   }
-};
+}
 
-// Вызовы обработчиков событий
-
+// Вызовы обработчикa событий открытия окна
 thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
-btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
-document.addEventListener('keydown', onCloseBigPictureKeydown);
 
 // Экспорты функций
 
-export { renderBigPictureAndOpenFullScreen };
+export { renderBigPicture };
