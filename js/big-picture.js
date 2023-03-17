@@ -58,13 +58,11 @@ const renderBigPicture = (picture) => {
 const onRemoveClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
   btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
-  // Вызовы обработчикa событий открытия окна
-  thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
 };
 
 // Функция открывающая большое изображение
 
-function onOpenBigPictureClick(evt) {
+const onOpenBigPictureClick = (evt) => {
   evt.preventDefault();
   // Делигирование событий
   if (evt.target.closest('.picture')) {
@@ -77,10 +75,8 @@ function onOpenBigPictureClick(evt) {
     document.addEventListener('keydown', onCloseBigPictureKeydown);
     // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
     btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
-    // Удаление обработчикa событий открытия окна
-    thumbnaiPicture.removeEventListener('click', onOpenBigPictureClick);
   }
-}
+};
 
 // Функция скрывает большое изображение по клику
 
