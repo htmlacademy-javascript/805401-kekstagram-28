@@ -22,17 +22,30 @@ const socialComment = socialComments.querySelector('.social__comment');
 // Кнопка загрузить еще коментарии
 const btnCommentsLoader = bigPicture.querySelector('.comments-loader');
 
+//функция создающая шаблон
+
+const createComment = (comment) => {
+
+  // Клонируем шаблон
+  const commentElement = socialComment.cloneNode(true);
+  // Находим коментарий аватар
+  commentElement.querySelector('.social__picture').src = comment.avatar;
+  // Находим имя
+  commentElement.querySelector('.social__picture').alt = comment.name;
+  // Находим текст комментария
+  commentElement.querySelector('.social__text').textContent = comment.message;
+
+  return commentElement;
+};
+
 // Функция отрисовки комментариев
 
 const renderCommentsForBigPhoto = (comments) => {
 
   const commentsFragment = document.createDocumentFragment();
   comments.forEach((comment) => {
-    const commentElement = socialComment.cloneNode(true);
-    commentElement.querySelector('.social__picture').src = comment.avatar;
-    commentElement.querySelector('.social__picture').alt = comment.name;
-    commentElement.querySelector('.social__text').textContent = comment.message;
-    commentsFragment.append(commentElement);
+    const comentary = createComment(comment);
+    commentsFragment.append(comentary);
   });
   socialComments.append(commentsFragment);
 };
@@ -98,4 +111,4 @@ const onCloseBigPictureKeydown = (evt) => {
 btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
 document.addEventListener('keydown', onCloseBigPictureKeydown);
 
-export {renderBigPictureAndOpenFullScreen};
+export { renderBigPictureAndOpenFullScreen };
