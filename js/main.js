@@ -1,8 +1,9 @@
 // Импорты модулей
+import { renderElements } from './util.js';
 import { getRandomPhotoGallery } from './data.js';
-import { renderThumbnails } from './thumbnail.js';
+import { createThumbnail, picturesСontainer } from './thumbnail.js';
 import './big-picture.js';
 
-renderThumbnails(getRandomPhotoGallery());
+renderElements(getRandomPhotoGallery(), createThumbnail, picturesСontainer);
 
 

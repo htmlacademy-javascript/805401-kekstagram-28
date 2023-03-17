@@ -1,4 +1,4 @@
-import { isEscapeKeydown } from './util.js';
+import { isEscapeKeydown, renderElements } from './util.js';
 
 const body = document.querySelector('body');
 // Контейнер большого изображения
@@ -38,18 +38,6 @@ const createComment = (comment) => {
   return commentElement;
 };
 
-// Функция отрисовки комментариев
-
-const renderCommentsForBigPhoto = (comments) => {
-
-  const commentsFragment = document.createDocumentFragment();
-  comments.forEach((comment) => {
-    const comentary = createComment(comment);
-    commentsFragment.append(comentary);
-  });
-  socialComments.append(commentsFragment);
-};
-
 // Функция отрисовки большого изображения
 const renderBigPictureAndOpenFullScreen = (picture) => {
   bigPicture.classList.remove('hidden');
@@ -61,8 +49,20 @@ const renderBigPictureAndOpenFullScreen = (picture) => {
   likesCount.textContent = picture.likes;
   socialCaption.textContent = picture.description;
   commentsCount.textContent = picture.comments.length;
-  renderCommentsForBigPhoto(picture.comments);
+  renderElements(picture.comments, createComment, socialComments);
 };
+
+// // Функция отрисовки комментариев
+
+// const renderCommentsForBigPhoto = (comments) => {
+
+//   const commentsFragment = document.createDocumentFragment();
+//   comments.forEach((comment) => {
+//     const comentary = createComment(comment);
+//     commentsFragment.append(comentary);
+//   });
+//   socialComments.append(commentsFragment);
+// };
 
 
 // const thumbnaiPicture = document.querySelector('.pictures');

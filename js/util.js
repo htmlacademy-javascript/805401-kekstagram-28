@@ -44,6 +44,25 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const isEscapeKeydown = (evt) => evt.key === 'Escape';
 
+// Функция отрисовки элемента
+// Принимает (1 элементы к которым применяет цикл, 2 функцию создающая шаблон, 3 контейнер для отрисовки элементов)
+
+const renderElements = (elements, calback, container) => {
+
+  // Создаём фрагмент
+  const fragment = document.createDocumentFragment();
+  // Цикл для миниатюр
+  elements.forEach((element) => {
+    // Присваиваем вызов функции отрисовки шаблона переменной
+    const template = calback(element);
+    // Отрисовываем шаблон в блок picture
+    fragment.append(template);
+  });
+
+  // Отрисуем сгенерированные DOM-элементы в блок .pictures
+  container.append(fragment);
+};
+
 // Экспорты функций
 
 export {
@@ -52,4 +71,5 @@ export {
   createIdGenerator,
   getRandomArrayElement,
   isEscapeKeydown,
+  renderElements,
 };

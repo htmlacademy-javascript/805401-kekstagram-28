@@ -27,24 +27,5 @@ const createThumbnail = (picture) => {
   return pictureElement;
 };
 
-// Функция отрисовки миниатюр
-
-const renderThumbnails = (piсtures) => {
-
-  // Создаём фрагмент
-  const anotherUserPhotoFragment = document.createDocumentFragment();
-  // Цикл для миниатюр
-  piсtures.forEach((picture) => {
-    // Присваиваем вызов функции отрисовки шаблона переменной
-    const thumbnail = createThumbnail(picture);
-    // Отрисовываем шаблон в блок picture
-    anotherUserPhotoFragment.append(thumbnail);
-  });
-
-  // Отрисуем сгенерированные DOM-элементы в блок .pictures
-  picturesСontainer.append(anotherUserPhotoFragment);
-
-};
-
-export { renderThumbnails };
+export { createThumbnail, picturesСontainer };
 
