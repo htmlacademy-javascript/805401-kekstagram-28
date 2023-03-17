@@ -1,6 +1,8 @@
 import { isEscapeKeydown, renderElements } from './util.js';
 
 const body = document.querySelector('body');
+// находим контейнер с миниатюрами
+const thumbnaiPicture = document.querySelector('.pictures');
 // Контейнер большого изображения
 const bigPicture = document.querySelector('.big-picture');
 // Кнопка закрыть
@@ -38,10 +40,23 @@ const createComment = (comment) => {
   return commentElement;
 };
 
+// Функция открывающая большое изображение
+
+const onOpenBigPictureClick = (evt) => {
+  evt.preventDefault();
+  // Делигирование событий
+  if (evt.target.closest('.picture')) {
+    // Действия
+    // console.log(evt.target); // в консоль выводится элемент
+    // Показываем большое изображение
+    bigPicture.classList.remove('hidden');
+    body.classList.add('modal-open');
+  }
+};
+
 // Функция отрисовки большого изображения
+
 const renderBigPictureAndOpenFullScreen = (picture) => {
-  bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
   socialComments.innerHTML = '';
   socialCommentCount.classList.add('hidden');
   btnCommentsLoader.classList.add('hidden');
@@ -51,43 +66,6 @@ const renderBigPictureAndOpenFullScreen = (picture) => {
   commentsCount.textContent = picture.comments.length;
   renderElements(picture.comments, createComment, socialComments);
 };
-
-// // Функция отрисовки комментариев
-
-// const renderCommentsForBigPhoto = (comments) => {
-
-//   const commentsFragment = document.createDocumentFragment();
-//   comments.forEach((comment) => {
-//     const comentary = createComment(comment);
-//     commentsFragment.append(comentary);
-//   });
-//   socialComments.append(commentsFragment);
-// };
-
-
-// const thumbnaiPicture = document.querySelector('.pictures');
-
-// const btnCommentsLoader = bigPicture.querySelector('.big-picture__cancel');
-
-// // const thumbnail = thumbnaiPicture.querySelectorAll('.picture');
-// // console.log(thumbnail);
-
-// // Функция показывает большое изображение по клику
-
-// const onOpenBigPictureClick = (evt) => {
-//   evt.preventDefault();
-//   // Делигирование событий
-//   if (evt.target.closest('.picture')) {
-//     // Действия
-//     console.log(evt.target); // в консоль выводится элемент
-//     // Показываем большое изображение
-//     bigPicture.classList.remove('hidden');
-//     body.classList.add('modal-open');
-
-//     bigPicture.querySelector('.big-picture__img').querySelector('img').src = evt.target.src;
-//     bigPicture.querySelector('.big-picture__img').querySelector('img').alt = evt.target.alt;
-//   }
-// };
 
 // Функция скрывает большое изображение по клику
 
@@ -106,9 +84,12 @@ const onCloseBigPictureKeydown = (evt) => {
   }
 };
 
+// Вызовы обработчиков событий
 
-// thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
+thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
 btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
 document.addEventListener('keydown', onCloseBigPictureKeydown);
+
+// Экспорты функций
 
 export { renderBigPictureAndOpenFullScreen };
