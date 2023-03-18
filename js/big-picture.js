@@ -64,7 +64,7 @@ const renderBigPicture = ({
 
 // Функция удаления обработчиков событий
 // Исправить имя
-const RemoveClickAndKeydownBigPicture = () => {
+const removeClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
   elements.btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
 };
@@ -95,7 +95,7 @@ function onCloseBigPictureClick() {
   elements.bigPicture.classList.add('hidden');
   elements.body.classList.remove('modal-open');
   // Вызываем функцию удвления обработчиков
-  RemoveClickAndKeydownBigPicture();
+  removeClickAndKeydownBigPicture();
 }
 
 // Функция скрывает большое изображение по нажатию клавиши
@@ -106,7 +106,7 @@ function onCloseBigPictureKeydown(evt) {
     onCloseBigPictureClick();
   }
   // Вызываем функцию удвления обработчиков
-  RemoveClickAndKeydownBigPicture();
+  removeClickAndKeydownBigPicture();
 }
 
 
