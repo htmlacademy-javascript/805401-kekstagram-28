@@ -63,8 +63,8 @@ const renderBigPicture = ({
 };
 
 // Функция удаления обработчиков событий
-
-const onRemoveClickAndKeydownBigPicture = () => {
+// Исправить имя
+const RemoveClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
   elements.btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
 };
@@ -74,7 +74,7 @@ const onRemoveClickAndKeydownBigPicture = () => {
 const onOpenBigPictureClick = (evt) => {
   evt.preventDefault();
   // Делигирование событий
-  if (evt.target.tagName.toLowerCase() === 'img') {
+  if (evt.target.closest('.picture')) {
     evt.preventDefault();
 
 
@@ -95,18 +95,18 @@ function onCloseBigPictureClick() {
   elements.bigPicture.classList.add('hidden');
   elements.body.classList.remove('modal-open');
   // Вызываем функцию удвления обработчиков
-  onRemoveClickAndKeydownBigPicture();
+  RemoveClickAndKeydownBigPicture();
 }
 
 // Функция скрывает большое изображение по нажатию клавиши
 
 function onCloseBigPictureKeydown(evt) {
-  if(isEscapeKeydown(evt)) {
+  if (isEscapeKeydown(evt)) {
     evt.preventDefault();
     onCloseBigPictureClick();
   }
   // Вызываем функцию удвления обработчиков
-  onRemoveClickAndKeydownBigPicture();
+  RemoveClickAndKeydownBigPicture();
 }
 
 
