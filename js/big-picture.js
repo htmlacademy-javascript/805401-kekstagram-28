@@ -1,63 +1,72 @@
 import { isEscapeKeydown, renderElements } from './util.js';
 
-const body = document.querySelector('body');
-// находим контейнер с миниатюрами
-const thumbnaiPicture = document.querySelector('.pictures');
-// Контейнер большого изображения
-const bigPicture = document.querySelector('.big-picture');
-// Кнопка закрыть
-const btnCloseBigPicture = bigPicture.querySelector('.big-picture__cancel');
-// Большое фото
-const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
-// Подпись для фотографии
-const socialCaption = bigPicture.querySelector('.social__caption');
-// Счетчик лайков
-const likesCount = bigPicture.querySelector('.likes-count');
-// Блок счетчика комментариев (${число} из)
-const socialCommentCount = bigPicture.querySelector('.social__comment-count');
-// Счетчик комиентариев (из ${число})
-const commentsCount = bigPicture.querySelector('.comments-count');
-// Блок-список комментариев
-const socialComments = bigPicture.querySelector('.social__comments');
-// Элемент список коментариев
-const socialComment = socialComments.querySelector('.social__comment');
-// Кнопка загрузить еще коментарии
-const btnCommentsLoader = bigPicture.querySelector('.comments-loader');
+const elements = {
+  body: document.querySelector('body'),
+  // находим контейнер с миниатюрами
+  thumbnaiPicture: document.querySelector('.pictures'),
+  // Контейнер большого изображения
+  bigPicture: document.querySelector('.big-picture'),
+  // Кнопка закрыть
+  btnCloseBigPicture: document.querySelector('.big-picture__cancel'),
+  // Большое фото
+  bigPictureImg: document.querySelector('.big-picture__img').querySelector('img'),
+  // Подпись для фотографии
+  socialCaption: document.querySelector('.social__caption'),
+  // Счетчик лайков
+  likesCount: document.querySelector('.likes-count'),
+  // Блок счетчика комментариев (${число} из)
+  socialCommentCount: document.querySelector('.social__comment-count'),
+  // Счетчик комиентариев (из ${число})
+  commentsCount: document.querySelector('.comments-count'),
+  // Блок-список комментариев
+  socialComments: document.querySelector('.social__comments'),
+  // Элемент список коментариев
+  socialComment: document.querySelector('.social__comment'),
+  // Кнопка загрузить еще коментарии
+  btnCommentsLoader: document.querySelector('.comments-loader'),
+};
 
 //функция создающая шаблон
 
-const createComment = (comment) => {
+const createComment = ({ avatar, name, message }) => {
 
   // Клонируем шаблон
-  const commentElement = socialComment.cloneNode(true);
+  const commentElement = elements.socialComment.cloneNode(true);
   // Находим коментарий аватар
-  commentElement.querySelector('.social__picture').src = comment.avatar;
+  commentElement.querySelector('.social__picture').src = avatar;
   // Находим имя
-  commentElement.querySelector('.social__picture').alt = comment.name;
+  commentElement.querySelector('.social__picture').alt = name;
   // Находим текст комментария
-  commentElement.querySelector('.social__text').textContent = comment.message;
+  commentElement.querySelector('.social__text').textContent = message;
 
   return commentElement;
 };
 
 // Функция отрисовки большого изображения
 
-const renderBigPicture = (picture) => {
-  socialComments.innerHTML = '';
-  socialCommentCount.classList.add('hidden');
-  btnCommentsLoader.classList.add('hidden');
-  bigPictureImg.src = picture.url;
-  likesCount.textContent = picture.likes;
-  socialCaption.textContent = picture.description;
-  commentsCount.textContent = picture.comments.length;
-  renderElements(picture.comments, createComment, socialComments);
+const renderBigPicture = ({
+  url,
+  likes,
+  description,
+  comments
+}) => {
+  elements.socialComments.innerHTML = '';
+  elements.socialCommentCount.classList.add('hidden');
+  elements.btnCommentsLoader.classList.add('hidden');
+
+  elements.bigPictureImg.src = url;
+  elements.likesCount.textContent = likes;
+  elements.socialCaption.textContent = description;
+  elements.commentsCount.textContent = comments.length;
+
+  renderElements(comments, createComment, elements.socialComments);
 };
 
 // Функция удаления обработчиков событий
 
 const onRemoveClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
-  btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
+  elements.btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
 };
 
 // Функция открывающая большое изображение
@@ -65,24 +74,26 @@ const onRemoveClickAndKeydownBigPicture = () => {
 const onOpenBigPictureClick = (evt) => {
   evt.preventDefault();
   // Делигирование событий
-  if (evt.target.closest('.picture')) {
+  if (evt.target.tagName.toLowerCase() === 'img') {
+    evt.preventDefault();
+
 
     // Показываем большое изображение
-    bigPicture.classList.remove('hidden');
-    body.classList.add('modal-open');
+    elements.bigPicture.classList.remove('hidden');
+    elements.body.classList.add('modal-open');
 
     // Вызов обработчика событий закрытия окна клавишей Esc
     document.addEventListener('keydown', onCloseBigPictureKeydown);
     // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
-    btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
+    elements.btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
   }
 };
 
 // Функция скрывает большое изображение по клику
 
 function onCloseBigPictureClick() {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
+  elements.bigPicture.classList.add('hidden');
+  elements.body.classList.remove('modal-open');
   // Вызываем функцию удвления обработчиков
   onRemoveClickAndKeydownBigPicture();
 }
@@ -90,17 +101,17 @@ function onCloseBigPictureClick() {
 // Функция скрывает большое изображение по нажатию клавиши
 
 function onCloseBigPictureKeydown(evt) {
-  if (isEscapeKeydown(evt)) {
+  if(isEscapeKeydown(evt)) {
     evt.preventDefault();
-    bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
-    // Вызываем функцию удвления обработчиков
-    onRemoveClickAndKeydownBigPicture();
+    onCloseBigPictureClick();
   }
+  // Вызываем функцию удвления обработчиков
+  onRemoveClickAndKeydownBigPicture();
 }
 
+
 // Вызовы обработчикa событий открытия окна
-thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
+elements.thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
 
 // Экспорты функций
 

@@ -7,21 +7,25 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 //функция создающая шаблон
 
-const createThumbnail = (picture) => {
-
+const createThumbnail = (pictureData) => {
   // Клонируем шаблон
   const pictureElement = pictureTemplate.cloneNode(true);
-  // Находим изображения
-  pictureElement.querySelector('.picture__img').src = picture.url;
-  // Находим подписи изображений
-  pictureElement.querySelector('.picture__img').alt = picture.description;
-  // Находим количество коментариев
-  pictureElement.querySelector('.picture__comments').textContent = picture.comments.length;
-  // Находим количество лайков
-  pictureElement.querySelector('.picture__likes').textContent = picture.likes;
 
+  // Находим элемент изображения и записываем в переменную чтобы использовть его свойства
+  const imageElement = pictureElement.querySelector('.picture__img');
+  // Находим изображения
+  imageElement.src = pictureData.url;
+  // Находим подписи изображений
+  imageElement.alt = pictureData.description;
+
+  // Находим количество коментариев
+  pictureElement.querySelector('.picture__comments').textContent = pictureData.comments.length;
+  // Находим количество лайков
+  pictureElement.querySelector('.picture__likes').textContent = pictureData.likes;
+
+  // Обработчик событий на отрисовку большого изображения
   pictureElement.addEventListener('click', () => {
-    renderBigPicture(picture);
+    renderBigPicture(pictureData);
   });
 
   return pictureElement;
