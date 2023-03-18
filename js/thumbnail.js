@@ -1,43 +1,35 @@
-import { getRandomPhotoGallery } from './data.js';
+import { renderBigPicture } from './big-picture.js';
 
 // находим поле для вставки миниатюр
 const picturesСontainer = document.querySelector('.pictures');
-// Находим заголовок
-const picturesTitle = picturesСontainer.querySelector('.pictures__title');
 // Находим шаблон изображения
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-// Присваеваем вызов функции, переменнной pictureItem
-const pictureElements = getRandomPhotoGallery();
 
-// Создаём функцию отрисовки миниатюр
+//функция создающая шаблон
 
-const renderThumbnails = () => {
+const createThumbnail = (pictureData) => {
+  // Клонируем шаблон
+  const pictureElement = pictureTemplate.cloneNode(true);
 
-  // Создаём фрагмент
-  const anotherUserPhotoFragment = document.createDocumentFragment();
+  // Находим элемент изображения и записываем в переменную чтобы использовть его свойства
+  const imageElement = pictureElement.querySelector('.picture__img');
+  // Находим изображения
+  imageElement.src = pictureData.url;
+  // Находим подписи изображений
+  imageElement.alt = pictureData.description;
 
-  pictureElements.forEach(({ url, comments, likes }) => {
+  // Находим количество коментариев
+  pictureElement.querySelector('.picture__comments').textContent = pictureData.comments.length;
+  // Находим количество лайков
+  pictureElement.querySelector('.picture__likes').textContent = pictureData.likes;
 
-    // Клонируем шаблон
-    const pictureElement = pictureTemplate.cloneNode(true);
-    // Находим изображения
-    pictureElement.querySelector('.picture__img').src = url;
-    // Находим количество коментариев
-    pictureElement.querySelector('.picture__comments').textContent = comments.length;
-    // Находим количество лайков
-    pictureElement.querySelector('.picture__likes').textContent = likes;
-
-    // Отрисовываем шаблон в блок picture
-    anotherUserPhotoFragment.append(pictureElement);
+  // Обработчик событий на отрисовку большого изображения
+  pictureElement.addEventListener('click', () => {
+    renderBigPicture(pictureData);
   });
 
-  // Показываем заголовок
-  picturesTitle.classList.remove('visually-hidden');
-
-  // Отрисуем сгенерированные DOM-элементы в блок .pictures
-  return picturesСontainer.append(anotherUserPhotoFragment);
-
+  return pictureElement;
 };
 
-export { renderThumbnails };
+export { createThumbnail, picturesСontainer };
 

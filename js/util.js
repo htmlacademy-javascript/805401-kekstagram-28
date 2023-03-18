@@ -40,6 +40,28 @@ function createIdGenerator() {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+// функция проверки срабатывания клавиши Esc
+
+const isEscapeKeydown = (evt) => evt.key === 'Escape';
+
+// Функция отрисовки элемента
+// Принимает (1 элементы к которым применяет цикл, 2 функцию создающая шаблон, 3 контейнер для отрисовки элементов)
+
+const renderElements = (elements, callback, container) => {
+
+  // Создаём фрагмент
+  const fragment = document.createDocumentFragment();
+  // Цикл для элементов
+  elements.forEach((element) => {
+    // Присваиваем вызов функции отрисовки шаблона переменной
+    const template = callback(element);
+    // Отрисовываем шаблон в блок picture
+    fragment.append(template);
+  });
+  // Отрисуем сгенерированные DOM-элементы в блок .pictures
+  container.append(fragment);
+};
+
 // Экспорты функций
 
 export {
@@ -47,4 +69,6 @@ export {
   createRandomIdFromRangeGenerator,
   createIdGenerator,
   getRandomArrayElement,
+  isEscapeKeydown,
+  renderElements,
 };

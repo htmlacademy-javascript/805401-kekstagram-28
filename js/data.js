@@ -74,7 +74,7 @@ const createRandomMessage = () => ({
 
 // Функция отрисовки коментариев фото галереи
 
-const getRandomMessagesGallery = () => Array.from({ length: getRandomInteger(1, 3)}, createRandomMessage);
+const getRandomMessagesGallery = () => Array.from({ length: getRandomInteger(1, 3) }, createRandomMessage);
 
 // Функция для создания случайного обьекта фотографии
 
