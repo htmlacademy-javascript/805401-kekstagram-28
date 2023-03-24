@@ -50,19 +50,23 @@ const renderBigPicture = ({
   description,
   comments
 }) => {
+  // Очищаем содержимое и скрываем счетчик и кнопку
   elements.socialComments.innerHTML = '';
   elements.socialCommentCount.classList.add('hidden');
   elements.btnCommentsLoader.classList.add('hidden');
 
+  // Присваеваем элементам значения
   elements.bigPictureImg.src = url;
   elements.likesCount.textContent = likes;
   elements.socialCaption.textContent = description;
   elements.commentsCount.textContent = comments.length;
 
+  // Отрисовываем комментарии
   renderElements(comments, createComment, elements.socialComments);
 };
 
 // Функция удаления обработчиков событий
+
 const removeClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
   elements.btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
@@ -70,22 +74,16 @@ const removeClickAndKeydownBigPicture = () => {
 
 // Функция открывающая большое изображение
 
-const onOpenBigPictureClick = (evt) => {
-  evt.preventDefault();
-  // Делигирование событий
-  if (evt.target.closest('.picture')) {
-    evt.preventDefault();
+const onOpenBigPictureClick = () => {
+  // Показываем большое изображение
+  elements.bigPicture.classList.remove('hidden');
+  elements.body.classList.add('modal-open');
 
+  // Вызов обработчика событий закрытия окна клавишей Esc
+  document.addEventListener('keydown', onCloseBigPictureKeydown);
+  // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
+  elements.btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
 
-    // Показываем большое изображение
-    elements.bigPicture.classList.remove('hidden');
-    elements.body.classList.add('modal-open');
-
-    // Вызов обработчика событий закрытия окна клавишей Esc
-    document.addEventListener('keydown', onCloseBigPictureKeydown);
-    // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
-    elements.btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
-  }
 };
 
 // Функция скрывает большое изображение по клику
@@ -104,14 +102,10 @@ function onCloseBigPictureKeydown(evt) {
     evt.preventDefault();
     onCloseBigPictureClick();
   }
-  // Вызываем функцию удвления обработчиков
+  // Вызываем функцию удаления обработчиков
   removeClickAndKeydownBigPicture();
 }
 
-
-// Вызовы обработчикa событий открытия окна
-elements.thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
-
 // Экспорты функций
 
-export { renderBigPicture };
+export { renderBigPicture, onOpenBigPictureClick };

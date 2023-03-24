@@ -1,7 +1,3 @@
-
-
-// находим поле для вставки миниатюр
-const picturesСontainer = document.querySelector('.pictures');
 // Находим шаблон изображения
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
@@ -27,5 +23,7 @@ const createThumbnail = ({url, likes, comments, description, id}) => {
   return pictureElement;
 };
 
-export { createThumbnail, picturesСontainer };
+// Экспорты функций
+
+export { createThumbnail};
 
