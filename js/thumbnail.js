@@ -1,4 +1,4 @@
-import { renderBigPicture } from './big-picture.js';
+
 
 // находим поле для вставки миниатюр
 const picturesСontainer = document.querySelector('.pictures');
@@ -23,11 +23,6 @@ const createThumbnail = ({url, likes, comments, description, id}) => {
   // Находим количество лайков
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.dataset.thumbnailId = id;
-
-  // Обработчик событий на отрисовку большого изображения
-  pictureElement.addEventListener('click', () => {
-    renderBigPicture({url, likes, comments, description, id});
-  });
 
   return pictureElement;
 };

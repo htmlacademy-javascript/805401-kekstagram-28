@@ -63,7 +63,6 @@ const renderBigPicture = ({
 };
 
 // Функция удаления обработчиков событий
-// Исправить имя
 const removeClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
   elements.btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);

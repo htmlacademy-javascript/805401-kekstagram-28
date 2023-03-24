@@ -1,9 +1,11 @@
 // Импорты модулей
-import { renderElements } from './util.js';
+// import { renderElements } from './util.js';
 import { getRandomPhotoGallery } from './data.js';
-import { createThumbnail, picturesСontainer } from './thumbnail.js';
+// import { createThumbnail, picturesСontainer } from './thumbnail.js';
 
 
-renderElements(getRandomPhotoGallery(), createThumbnail, picturesСontainer);
+import {renderGallery} from './gallery.js';
+
+renderGallery(getRandomPhotoGallery());
 
 
