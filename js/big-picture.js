@@ -1,4 +1,9 @@
-import { isEscapeKeydown, renderElements } from './util.js';
+import { isEscapeKeydown } from './util.js';
+
+// Количество видимых комментариев
+const VISIBLE_COMMENT = 5;
+// Счетчик видимых комментариев
+let visibleCommentsCount = VISIBLE_COMMENT;
 
 const elements = {
   body: document.querySelector('body'),
@@ -26,7 +31,7 @@ const elements = {
   btnCommentsLoader: document.querySelector('.comments-loader'),
 };
 
-//функция создающая шаблон
+// Функция создающая шаблон
 
 const createComment = ({ avatar, name, message }) => {
 
@@ -42,6 +47,38 @@ const createComment = ({ avatar, name, message }) => {
   return commentElement;
 };
 
+const renderComments = (comments) => {
+  // создаём фрагмент
+  const commentsFragment = document.createDocumentFragment();
+
+  // Функция добовляет больше комментариев
+
+  const addMoreComments = () => {
+    // обновляем счетчик комментариев
+    visibleCommentsCount += VISIBLE_COMMENT;
+    renderComments(comments);
+  };
+  // Возвращаем новый массив
+  comments.slice(0, visibleCommentsCount).forEach((comment) => {
+    commentsFragment.append(createComment(comment));
+  });
+  // Очищаем комментарии
+  elements.socialComments.innerHTML = '';
+  // Отрисовываем
+  elements.socialComments.append(commentsFragment);
+
+  // Условия показа кнопки и счетчика комментариев
+  if (visibleCommentsCount >= comments.length) {
+    visibleCommentsCount = comments.length;
+    elements.btnCommentsLoader.classList.add('hidden');
+  } else {
+    elements.btnCommentsLoader.classList.remove('hidden');
+    elements.btnCommentsLoader.addEventListener('click', addMoreComments, { once: true });
+  }
+  // Отображаем количество отрисованных комментариев
+  elements.socialCommentCount.textContent = `${visibleCommentsCount} из ${comments.length} комментариев`;
+};
+
 // Функция отрисовки большого изображения
 
 const renderBigPicture = ({
@@ -50,43 +87,39 @@ const renderBigPicture = ({
   description,
   comments
 }) => {
+  // Приравниваем видимые коментарии к константе
+  visibleCommentsCount = VISIBLE_COMMENT;
+  // Очищаем содержимое
   elements.socialComments.innerHTML = '';
-  elements.socialCommentCount.classList.add('hidden');
-  elements.btnCommentsLoader.classList.add('hidden');
 
+  // Присваеваем элементам значения
   elements.bigPictureImg.src = url;
   elements.likesCount.textContent = likes;
   elements.socialCaption.textContent = description;
   elements.commentsCount.textContent = comments.length;
 
-  renderElements(comments, createComment, elements.socialComments);
+  // Отрисовываем комментарии
+  renderComments(comments);
 };
 
 // Функция удаления обработчиков событий
-// Исправить имя
-const RemoveClickAndKeydownBigPicture = () => {
+
+const removeClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
   elements.btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
 };
 
 // Функция открывающая большое изображение
 
-const onOpenBigPictureClick = (evt) => {
-  evt.preventDefault();
-  // Делигирование событий
-  if (evt.target.closest('.picture')) {
-    evt.preventDefault();
+const onOpenBigPictureClick = () => {
+  // Показываем большое изображение
+  elements.bigPicture.classList.remove('hidden');
+  elements.body.classList.add('modal-open');
 
-
-    // Показываем большое изображение
-    elements.bigPicture.classList.remove('hidden');
-    elements.body.classList.add('modal-open');
-
-    // Вызов обработчика событий закрытия окна клавишей Esc
-    document.addEventListener('keydown', onCloseBigPictureKeydown);
-    // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
-    elements.btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
-  }
+  // Вызов обработчика событий закрытия окна клавишей Esc
+  document.addEventListener('keydown', onCloseBigPictureKeydown);
+  // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
+  elements.btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
 };
 
 // Функция скрывает большое изображение по клику
@@ -95,7 +128,7 @@ function onCloseBigPictureClick() {
   elements.bigPicture.classList.add('hidden');
   elements.body.classList.remove('modal-open');
   // Вызываем функцию удвления обработчиков
-  RemoveClickAndKeydownBigPicture();
+  removeClickAndKeydownBigPicture();
 }
 
 // Функция скрывает большое изображение по нажатию клавиши
@@ -105,14 +138,10 @@ function onCloseBigPictureKeydown(evt) {
     evt.preventDefault();
     onCloseBigPictureClick();
   }
-  // Вызываем функцию удвления обработчиков
-  RemoveClickAndKeydownBigPicture();
+  // Вызываем функцию удаления обработчиков
+  removeClickAndKeydownBigPicture();
 }
-
-
-// Вызовы обработчикa событий открытия окна
-elements.thumbnaiPicture.addEventListener('click', onOpenBigPictureClick);
 
 // Экспорты функций
 
-export { renderBigPicture };
+export { renderBigPicture, onOpenBigPictureClick };

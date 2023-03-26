@@ -50,8 +50,17 @@ const DESCRIPTIONS = [
   'Парусная яхта',
 ];
 
+// Минимальное количество лайков
+const MIN_LIKES = 15;
+// Максимальное количество лайков
+const MAX_LIKES = 200;
+// Количество аватаров
+const AVATAR_COUNT = 6;
+// Минимальное количество комментариев
+const COMMENT_NUMBER_MIN = 1;
+// Максимальное количесво комментариев
+const COMMENT_NUMBER_MAX = 15;
 // Счетчик сгенерированных обьектов
-
 const GENERATION_COUNT = 25;
 
 // Переменная для генерации ID коментария
@@ -61,7 +70,7 @@ const generatePhotoId = createIdGenerator();
 // Переменная для генерации URL: фотографии
 const generatePhotoUrl = createRandomIdFromRangeGenerator(1, GENERATION_COUNT);
 // Переменная для генерации URL: фотографии аватара
-const generateAvatarUrl = () => getRandomInteger(1, 6);
+const generateAvatarUrl = () => getRandomInteger(1, AVATAR_COUNT);
 
 // Функция для создания случайного обьекта коментария для фотографии
 
@@ -74,7 +83,7 @@ const createRandomMessage = () => ({
 
 // Функция отрисовки коментариев фото галереи
 
-const getRandomMessagesGallery = () => Array.from({ length: getRandomInteger(1, 3) }, createRandomMessage);
+const getRandomMessagesGallery = () => Array.from({ length: getRandomInteger(COMMENT_NUMBER_MIN, COMMENT_NUMBER_MAX) }, createRandomMessage);
 
 // Функция для создания случайного обьекта фотографии
 
@@ -82,7 +91,7 @@ const createPhotoPost = () => ({
   id: generatePhotoId(),
   url: `photos/${generatePhotoUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15, 200),
+  likes: getRandomInteger(MIN_LIKES, MAX_LIKES),
   comments: getRandomMessagesGallery(),
 });
 
