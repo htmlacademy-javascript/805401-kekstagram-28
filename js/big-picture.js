@@ -1,4 +1,9 @@
-import { isEscapeKeydown, renderElements } from './util.js';
+import { isEscapeKeydown } from './util.js';
+
+// Количество видимых комментариев
+const VISIBLE_COMMENT = 5;
+// Счетчик видимых комментариев
+let visibleCommentsCount = VISIBLE_COMMENT;
 
 const elements = {
   body: document.querySelector('body'),
@@ -26,7 +31,7 @@ const elements = {
   btnCommentsLoader: document.querySelector('.comments-loader'),
 };
 
-//функция создающая шаблон
+// Функция создающая шаблон
 
 const createComment = ({ avatar, name, message }) => {
 
@@ -42,6 +47,38 @@ const createComment = ({ avatar, name, message }) => {
   return commentElement;
 };
 
+const renderComments = (comments) => {
+  // создаём фрагмент
+  const commentsFragment = document.createDocumentFragment();
+
+  // Функция добовляет больше комментариев
+
+  const addMoreComments = () => {
+    // обновляем счетчик комментариев
+    visibleCommentsCount += VISIBLE_COMMENT;
+    renderComments(comments);
+  };
+  // Возвращаем новый массив
+  comments.slice(0, visibleCommentsCount).forEach((comment) => {
+    commentsFragment.append(createComment(comment));
+  });
+  // Очищаем комментарии
+  elements.socialComments.innerHTML = '';
+  // Отрисовываем
+  elements.socialComments.append(commentsFragment);
+
+  // Условия показа кнопки и счетчика комментариев
+  if (visibleCommentsCount >= comments.length) {
+    visibleCommentsCount = comments.length;
+    elements.btnCommentsLoader.classList.add('hidden');
+  } else {
+    elements.btnCommentsLoader.classList.remove('hidden');
+    elements.btnCommentsLoader.addEventListener('click', addMoreComments, { once: true });
+  }
+  // Отображаем количество отрисованных комментариев
+  elements.socialCommentCount.textContent = `${visibleCommentsCount} из ${comments.length} комментариев`;
+};
+
 // Функция отрисовки большого изображения
 
 const renderBigPicture = ({
@@ -50,10 +87,10 @@ const renderBigPicture = ({
   description,
   comments
 }) => {
-  // Очищаем содержимое и скрываем счетчик и кнопку
+  // Приравниваем видимые коментарии к константе
+  visibleCommentsCount = VISIBLE_COMMENT;
+  // Очищаем содержимое
   elements.socialComments.innerHTML = '';
-  elements.socialCommentCount.classList.add('hidden');
-  elements.btnCommentsLoader.classList.add('hidden');
 
   // Присваеваем элементам значения
   elements.bigPictureImg.src = url;
@@ -62,7 +99,7 @@ const renderBigPicture = ({
   elements.commentsCount.textContent = comments.length;
 
   // Отрисовываем комментарии
-  renderElements(comments, createComment, elements.socialComments);
+  renderComments(comments);
 };
 
 // Функция удаления обработчиков событий
@@ -83,7 +120,6 @@ const onOpenBigPictureClick = () => {
   document.addEventListener('keydown', onCloseBigPictureKeydown);
   // Вызов обработчика событий закрытия окна нажатием кнопки закрыть
   elements.btnCloseBigPicture.addEventListener('click', onCloseBigPictureClick);
-
 };
 
 // Функция скрывает большое изображение по клику

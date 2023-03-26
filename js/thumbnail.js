@@ -3,7 +3,7 @@ const pictureTemplate = document.querySelector('#picture').content.querySelector
 
 //функция создающая шаблон
 
-const createThumbnail = ({url, likes, comments, description, id}) => {
+const createThumbnail = ({ url, likes, comments, description, id }) => {
   // Клонируем шаблон
   const pictureElement = pictureTemplate.cloneNode(true);
 
@@ -25,5 +25,5 @@ const createThumbnail = ({url, likes, comments, description, id}) => {
 
 // Экспорты функций
 
-export { createThumbnail};
+export { createThumbnail };
 

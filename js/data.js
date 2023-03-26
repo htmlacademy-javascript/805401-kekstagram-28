@@ -50,14 +50,17 @@ const DESCRIPTIONS = [
   'Парусная яхта',
 ];
 
+// Минимальное количество лайков
 const MIN_LIKES = 15;
+// Максимальное количество лайков
 const MAX_LIKES = 200;
+// Количество аватаров
 const AVATAR_COUNT = 6;
+// Минимальное количество комментариев
 const COMMENT_NUMBER_MIN = 1;
-const COMMENT_NUMBER_MAX = 3;
-
+// Максимальное количесво комментариев
+const COMMENT_NUMBER_MAX = 15;
 // Счетчик сгенерированных обьектов
-
 const GENERATION_COUNT = 25;
 
 // Переменная для генерации ID коментария
