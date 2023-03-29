@@ -9,20 +9,22 @@ const DEFAULT_SCALE = 100;
 
 
 // Кнопка уменьшения масштаба
-const btnControlSmaller = document.querySelector('.scale__control--smaller');
+const btnControllSmaller = document.querySelector('.scale__control--smaller');
 // Кнопка увеличения масштаба
-const btnControlBigger = document.querySelector('.scale__control--bigger');
+const btnControllBigger = document.querySelector('.scale__control--bigger');
 // Поле с масштабом
-const inputScaleValue = document.querySelector('.scale__control--value');
+const inputScale = document.querySelector('.scale__control--value');
 // Загруженная картинка
-const previevPhotoImg = document.querySelector('.img-upload__preview img');
+const previewPhotoImg = document.querySelector('.img-upload__preview img');
 
 // Функция получает текущее значение масштаба
-const getScaleValue = () => parseInt(inputScaleValue.value, 10);
+const getScaleValue = () => parseInt(inputScale.value, 10);
+
+// Функция масштабирует фото
 
 const scaleImage = (value) => {
-  previevPhotoImg.style.transform = `sclae(${value / 100})`;
-  inputScaleValue.value = `${value}%`;
+  previewPhotoImg.style.transform = `scale(${value / 100})`;
+  inputScale.value = `${value}%`;
 };
 
 // Функция уменьшает масштаб
@@ -51,8 +53,8 @@ const onBiggerButtonClick = () => {
 const resetScale = () => scaleImage(DEFAULT_SCALE);
 
 // Обработчик событий на кнопку уменьшения изображения
-btnControlSmaller.addEventListener('click', onSmallerButtonClick);
+btnControllSmaller.addEventListener('click', onSmallerButtonClick);
 // Обработчик событий на кнопку увеличения изображения
-btnControlBigger.addEventListener('click', onBiggerButtonClick);
+btnControllBigger.addEventListener('click', onBiggerButtonClick);
 
 export { resetScale };
