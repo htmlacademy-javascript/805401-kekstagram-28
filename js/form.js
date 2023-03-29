@@ -1,4 +1,6 @@
 import { isEscapeKeydown } from './util.js';
+import { resetScale } from './scale.js';
+import {resetEffect} from './effects.js';
 
 // Регулярное выражение для проверки хэш-тегов
 const REGEXP_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -31,6 +33,9 @@ const onOpenImgUploadForm = () => {
 // Функция закрывает форму для редактирования фото
 
 const onCloseImgUploadForm = () => {
+  resetScale();
+  resetEffect();
+  imgUploadForm.reset();
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onCloseImgUploadFormKeydown);
