@@ -1,5 +1,3 @@
-// import { renderGallery } from './gallery.js';
-
 // Адрес получаемых данных
 const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 
@@ -45,10 +43,4 @@ const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POS
 
 export { getData, sendData };
 
-// // Получаем и отрисовываем данные на странице
-// fetch(`${BASE_URL}`)
-//   .then((response) => response.json())
-//   .then((photo) => {
-//     renderGallery(photo);
-//   });
 
