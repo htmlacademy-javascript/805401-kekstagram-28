@@ -74,7 +74,7 @@ const pristine = new Pristine(imgUploadForm, {
 // Функция форматирует данные для проверки
 
 const formatStringToArray = (string) => {
-  const array = string.trim().split(' ').filter((arr) => arr.trim().length);
+  const array = string.toLowerCase().trim().split(' ').filter((arr) => arr.trim().length);
   return array;
 };
 
