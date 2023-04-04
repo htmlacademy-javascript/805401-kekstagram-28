@@ -78,6 +78,7 @@ const filtersEffectValue = document.querySelector('.effect-level__value');
 const filtersEffectLevel = document.querySelector('.img-upload__effect-level');
 
 // Функция приравнивает к значению по умолчанию
+
 const isDefault = () => currentEffect === DEFAULT_EFFECT;
 
 // Функция добавляет слайдер
