@@ -7,6 +7,8 @@ import { showErrorGetData } from './messages.js';
 import { showFilteredPictures } from './filters.js';
 import { selectPictureToPreview } from './preview-pictures.js';
 
+// Вызовы функций
+
 getData()
   .then((photos) => {
     renderGallery(photos);

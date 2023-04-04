@@ -101,7 +101,7 @@ const validationTheNumberOfHashtags = (value) => {
   return array.length <= HASHTAG_MAX_COUNT;
 };
 
-// Функция проверяет одинвковые хэш-теги
+// Функция проверяет одинаковые хэш-теги
 
 const validationDubleHashtags = (value) => {
   const array = formatStringToArray(value);
@@ -114,21 +114,10 @@ pristine.addValidator(hashtagInput, validationHashtag, 'Неправильно �
 pristine.addValidator(hashtagInput, validationTheNumberOfHashtags, `Нельзя ввести больше ${HASHTAG_MAX_COUNT} #хэш-тегов`);
 pristine.addValidator(hashtagInput, validationDubleHashtags, 'Такой #хэш-тег уже существует, введите уникальный хештег');
 
-// Функция проверки валидации формы перед отправкой
-
-const onImgUploadForm = (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    imgUploadForm.submit();
-  }
-};
-
 // Открываем формы при выборе фото
 imgUploadFile.addEventListener('change', onOpenImgUploadForm);
 // Закрываем при нажатии на кнопку
 imgUploadCancel.addEventListener('click', onCloseImgUploadForm);
-// Отправка формы при валидном вводе данных
-imgUploadForm.addEventListener('submit', onImgUploadForm);
 
 // Блокирует кнопку при отправке
 const lockSubmitButton = () => {
