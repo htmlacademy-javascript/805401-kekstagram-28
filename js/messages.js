@@ -1,20 +1,20 @@
 import { isEscapeKeydown } from './util.js';
 
 // Шаблон ошибки
-const messageError = document.querySelector('#error').content.querySelector('.error');
+const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 // Шаблон успешной отправки
-const messageSuccess = document.querySelector('#success').content.querySelector('.success');
+const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 
 
 // Функция отрисовывает ошибку при получении данных
 
 const showErrorGetData = (error) => {
   // Клонируем шаблон
-  const messageTemp = messageError.cloneNode(true);
+  const messageTemp = errorMessageTemplate.cloneNode(true);
   // Находим заголовок ошибки и присваем аргумент функции
   messageTemp.querySelector('.error__title').textContent = error;
   // Обработчик события по нажатию клавиши ESC
-  document.addEventListener('keydown', onDocumentKeydownError);
+  document.addEventListener('keydown', onEscapeKeyDownForErrorMessage);
   // Скрываем кнопку
   messageTemp.querySelector('.error__button').classList.add('hidden');
   // Отрисовываем шаблон и убираем его функцией setTimeout через 5 секунд
@@ -27,7 +27,7 @@ const showErrorGetData = (error) => {
 // Функция закрывает окно ошибки
 
 const closeErrorPopup = () => {
-  document.removeEventListener('keydown', onDocumentKeydownError);
+  document.removeEventListener('keydown', onEscapeKeyDownForErrorMessage);
   const errorPopup = document.querySelector('.error');
   errorPopup.remove();
 };
@@ -44,10 +44,10 @@ const onOutSideErrorClick = (evt) => {
 // Функция отрисовывает ошибку
 
 const showErrorSendData = () => {
-  const messageTemp = messageError.cloneNode(true);
+  const messageTemp = errorMessageTemplate.cloneNode(true);
 
   messageTemp.querySelector('.error__button').addEventListener('click', closeErrorPopup);
-  document.addEventListener('keydown', onDocumentKeydownError);
+  document.addEventListener('keydown', onEscapeKeyDownForErrorMessage);
   document.addEventListener('click', onOutSideErrorClick, { once: true });
 
   document.body.append(messageTemp);
@@ -55,7 +55,7 @@ const showErrorSendData = () => {
 
 // Функция закрывает окно ошибки нажатием клавиши ESC
 
-function onDocumentKeydownError(evt) {
+function onEscapeKeyDownForErrorMessage(evt) {
   if (isEscapeKeydown(evt)) {
     evt.preventDefault();
     closeErrorPopup();
@@ -65,7 +65,7 @@ function onDocumentKeydownError(evt) {
 // Функция закрывает окно успешной отправки данных
 
 const closeSuccessPopup = () => {
-  document.removeEventListener('keydown', onDocumentKeydownSuccess);
+  document.removeEventListener('keydown', onEscapeKeyDownForSuccessMessage);
   const successPopup = document.querySelector('.success');
   successPopup.remove();
 };
@@ -83,11 +83,11 @@ const onOutSideSuccessClick = (evt) => {
 
 const showSuccessSendData = () => {
   // Клонируем шаблон
-  const messageTemp = messageSuccess.cloneNode(true);
+  const messageTemp = successMessageTemplate.cloneNode(true);
   // Находим кнопку и вешаем на неё обработчик событий по клику
   messageTemp.querySelector('.success__button').addEventListener('click', closeSuccessPopup);
   // Обработчик событий по нажатию ESC
-  document.addEventListener('keydown', onDocumentKeydownSuccess);
+  document.addEventListener('keydown', onEscapeKeyDownForSuccessMessage);
   // O,hf,jnxbr события по клику
   document.addEventListener('click', onOutSideSuccessClick, { once: true });
   // Отрисовываем шаблон
@@ -96,7 +96,7 @@ const showSuccessSendData = () => {
 
 // Функция закрывает окно успешной отправки нажатием клавиши ESC
 
-function onDocumentKeydownSuccess(evt) {
+function onEscapeKeyDownForSuccessMessage(evt) {
   if (isEscapeKeydown(evt)) {
     evt.preventDefault();
     closeSuccessPopup();
