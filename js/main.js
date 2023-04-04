@@ -1,15 +1,18 @@
 // Импорты модулей
 
-// import { getRandomPhotoGallery } from './data.js';
-import {getData} from './api.js';
+import { getData } from './api.js';
 import { renderGallery } from './gallery.js';
-import './form.js';
-import './api.js';
-
-// renderGallery(getRandomPhotoGallery());
+import { setUserFormSubmit, onCloseImgUploadForm } from './form.js';
+import { showErrorGetData } from './messages.js';
 
 getData()
   .then((photos) => {
     renderGallery(photos);
-  });
+  })
+  .catch(
+    (err) => {
+      showErrorGetData(err.message);
+    }
+  );
 
+setUserFormSubmit(onCloseImgUploadForm);

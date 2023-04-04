@@ -1,11 +1,18 @@
 import { isEscapeKeydown } from './util.js';
 import { resetScale } from './scale.js';
-import {resetEffect} from './effects.js';
+import { resetEffect } from './effects.js';
+import { sendData } from './api.js';
+import { showSuccessSendData, showErrorSendData } from './messages.js';
 
 // Регулярное выражение для проверки хэш-тегов
 const REGEXP_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 // Максимальное количество хэш-тегов
 const HASHTAG_MAX_COUNT = 5;
+//состояния для кнопок отправки формы
+const SubmitButtonText = {
+  TEXT_IDLE: 'Опубликовать',
+  TEXT_SENDING: 'Загружаю...'
+};
 
 // Находим body
 const body = document.querySelector('body');
@@ -21,6 +28,8 @@ const hashtagInput = document.querySelector('.text__hashtags');
 const commentField = document.querySelector('.text__description');
 // Кнопка закрытия окна
 const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
+//кнопка отправки формы
+const submitButton = document.querySelector('.img-upload__submit');
 
 // Функция открывает форму для редактирования фото
 
@@ -118,3 +127,33 @@ imgUploadFile.addEventListener('change', onOpenImgUploadForm);
 imgUploadCancel.addEventListener('click', onCloseImgUploadForm);
 // Отправка формы при валидном вводе данных
 imgUploadForm.addEventListener('submit', onImgUploadForm);
+
+// Блокирует кнопку при отправке
+const lockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.TEXT_SENDING;
+};
+
+// Разблокирует кнопку отправки
+const unlockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.TEXT_IDLE;
+};
+
+// Функция обработчик на форму
+const setUserFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      lockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .then(showSuccessSendData)
+        .catch(showErrorSendData)
+        .finally(unlockSubmitButton);
+    }
+  });
+};
+
+export { setUserFormSubmit, onCloseImgUploadForm };
