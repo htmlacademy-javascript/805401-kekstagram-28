@@ -1,3 +1,5 @@
+// Импорты модулей
+
 import { isEscapeKeydown } from './util.js';
 import { resetScale } from './scale.js';
 import { resetEffect } from './effects.js';

@@ -1,3 +1,5 @@
+// Импорты модулей
+
 import { renderElements } from './util.js';
 import { renderBigPicture, onOpenBigPictureClick } from './big-picture.js';
 import { createThumbnail } from './thumbnail.js';
