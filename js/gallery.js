@@ -2,6 +2,7 @@ import { renderElements } from './util.js';
 import { renderBigPicture, onOpenBigPictureClick } from './big-picture.js';
 import { createThumbnail } from './thumbnail.js';
 
+// Контейнер изображения
 const picturesConteiner = document.querySelector('.pictures');
 
 const renderGallery = (pictures) => {
