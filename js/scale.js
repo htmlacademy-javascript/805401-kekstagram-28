@@ -23,7 +23,7 @@ const getScaleValue = () => parseInt(inputScale.value, 10);
 // Функция масштабирует фото
 
 const scaleImage = (value) => {
-  previewPhotoImg.style.transform = `scale(${value / 100})`;
+  previewPhotoImg.style.transform = `scale(${value / MAX_SCALE})`;
   inputScale.value = `${value}%`;
 };
 
