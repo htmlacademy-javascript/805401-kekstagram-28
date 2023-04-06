@@ -1,3 +1,5 @@
+// Импорты модулей
+
 import { isEscapeKeydown } from './util.js';
 
 // Количество видимых комментариев

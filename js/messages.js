@@ -1,3 +1,5 @@
+// Импорты модулей
+
 import { isEscapeKeydown } from './util.js';
 
 // Шаблон ошибки

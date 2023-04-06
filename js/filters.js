@@ -1,3 +1,5 @@
+// Импорты модулей
+
 import { debounce } from './util.js';
 import { renderGallery } from './gallery.js';
 
