@@ -54,12 +54,12 @@ const onCloseImgUploadForm = () => {
 
 // Функция отменяет закрытие при активном поле хэш-тега или комментария к фотографии
 
-const ifTheFieldInFocus = () => document.activeElement === hashtagInput || document.activeElement === commentField;
+const isFieldInFocus = () => document.activeElement === hashtagInput || document.activeElement === commentField;
 
 // Функция закрывает окно при нажатии кнопки Esc
 
 function onCloseImgUploadFormKeydown(evt) {
-  if (isEscapeKeydown(evt) && !ifTheFieldInFocus()) {
+  if (isEscapeKeydown(evt) && !isFieldInFocus()) {
     evt.preventDefault();
     onCloseImgUploadForm();
   }
@@ -82,37 +82,37 @@ const formatStringToArray = (string) => {
 
 // Функция, проверяющая хэш-тег на соответствие с патерном
 
-const checkedValidationHashtag = (string) => {
+const isCheckValidationHashtag = (string) => {
   const pattern = REGEXP_HASHTAG;
   return pattern.test(string);
 };
 
 // Функция проверки валидности хэш-тегов
 
-const validationHashtag = (string) => {
+const isValidationHashtag = (string) => {
   const array = formatStringToArray(string);
-  return array.every(checkedValidationHashtag);
+  return array.every(isCheckValidationHashtag);
 };
 
 // Функция проверяет количество хэш-тегов
 
-const validationTheNumberOfHashtags = (value) => {
+const isNumberOfHashtags = (value) => {
   const array = formatStringToArray(value);
   return array.length <= HASHTAG_MAX_COUNT;
 };
 
 // Функция проверяет одинаковые хэш-теги
 
-const validationDubleHashtags = (value) => {
+const isHashtagNotDouble = (value) => {
   const array = formatStringToArray(value);
   return new Set(array).size === array.length;
 };
 
 // Создаём валидаторы
 
-pristine.addValidator(hashtagInput, validationHashtag, 'Неправильно введен #хэш-тег!');
-pristine.addValidator(hashtagInput, validationTheNumberOfHashtags, `Нельзя ввести больше ${HASHTAG_MAX_COUNT} #хэш-тегов`);
-pristine.addValidator(hashtagInput, validationDubleHashtags, 'Такой #хэш-тег уже существует, введите уникальный хештег');
+pristine.addValidator(hashtagInput, isValidationHashtag, 'Неправильно введен #хэш-тег!');
+pristine.addValidator(hashtagInput, isNumberOfHashtags, `Нельзя ввести больше ${HASHTAG_MAX_COUNT} #хэш-тегов`);
+pristine.addValidator(hashtagInput, isHashtagNotDouble, 'Такой #хэш-тег уже существует, введите уникальный хештег');
 
 // Открываем формы при выборе фото
 imgUploadFile.addEventListener('change', onOpenImgUploadForm);
