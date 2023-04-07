@@ -76,8 +76,8 @@ const pristine = new Pristine(imgUploadForm, {
 // Функция форматирует данные для проверки
 
 const formatStringToArray = (string) => {
-  const array = string.toLowerCase().trim().split(' ').filter((arr) => arr.trim().length);
-  return array;
+  const tags = string.toLowerCase().trim().split(' ').filter((arr) => arr.trim().length);
+  return tags;
 };
 
 // Функция, проверяющая хэш-тег на соответствие с патерном
@@ -90,22 +90,22 @@ const isCheckValidationHashtag = (string) => {
 // Функция проверки валидности хэш-тегов
 
 const isValidationHashtag = (string) => {
-  const array = formatStringToArray(string);
-  return array.every(isCheckValidationHashtag);
+  const tags = formatStringToArray(string);
+  return tags.every(isCheckValidationHashtag);
 };
 
 // Функция проверяет количество хэш-тегов
 
 const isNumberOfHashtags = (value) => {
-  const array = formatStringToArray(value);
-  return array.length <= HASHTAG_MAX_COUNT;
+  const tags = formatStringToArray(value);
+  return tags.length <= HASHTAG_MAX_COUNT;
 };
 
 // Функция проверяет одинаковые хэш-теги
 
 const isHashtagNotDouble = (value) => {
-  const array = formatStringToArray(value);
-  return new Set(array).size === array.length;
+  const tags = formatStringToArray(value);
+  return new Set(tags).size === tags.length;
 };
 
 // Создаём валидаторы
