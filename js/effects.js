@@ -1,5 +1,5 @@
 // Настройки фильтров
-const FilterEffects = [
+const FILTER_EFFECTS = [
   {
     NAME: 'none',
     FILTER: 'none',
@@ -62,9 +62,7 @@ const FilterEffects = [
   }
 ];
 // Значение по умолчанию
-const DEFAULT_EFFECT = FilterEffects[0];
-// Текущее значение
-let currentEffect = DEFAULT_EFFECT;
+const DEFAULT_EFFECT = FILTER_EFFECTS[0];
 
 // Загруженная картинка
 const previewPhotoImg = document.querySelector('.img-upload__preview img');
@@ -76,6 +74,8 @@ const filtersEffectSlider = document.querySelector('.effect-level__slider');
 const filtersEffectValue = document.querySelector('.effect-level__value');
 // Контейнер слайдера
 const filtersEffectLevel = document.querySelector('.img-upload__effect-level');
+// Текущее значение
+let currentEffect = DEFAULT_EFFECT;
 
 // Функция приравнивает к значению по умолчанию
 
@@ -116,7 +116,7 @@ const onEffectChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
-  currentEffect = FilterEffects.find((effect) => effect.NAME === evt.target.value);
+  currentEffect = FILTER_EFFECTS.find((effect) => effect.NAME === evt.target.value);
   previewPhotoImg.className = `effects__preview--${currentEffect.NAME}`;
   updateSlider();
 };
