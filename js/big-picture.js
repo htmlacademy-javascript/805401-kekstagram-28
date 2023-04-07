@@ -55,7 +55,7 @@ const renderComments = (comments) => {
 
   // Функция добовляет больше комментариев
 
-  const addMoreComments = () => {
+  const onAddMoreCommentsClick = () => {
     // обновляем счетчик комментариев
     visibleCommentsCount += VISIBLE_COMMENT;
     renderComments(comments);
@@ -75,7 +75,7 @@ const renderComments = (comments) => {
     elements.btnCommentsLoader.classList.add('hidden');
   } else {
     elements.btnCommentsLoader.classList.remove('hidden');
-    elements.btnCommentsLoader.addEventListener('click', addMoreComments, { once: true });
+    elements.btnCommentsLoader.addEventListener('click', onAddMoreCommentsClick, { once: true });
   }
   // Отображаем количество отрисованных комментариев
   elements.socialCommentCount.textContent = `${visibleCommentsCount} из ${comments.length} комментариев`;

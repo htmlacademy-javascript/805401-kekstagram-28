@@ -67,7 +67,7 @@ function onEscapeKeyDownForErrorMessage(evt) {
 
 // Функция закрывает окно успешной отправки данных
 
-const closeSuccessPopup = () => {
+const onCloseSuccessPopupClick = () => {
   document.removeEventListener('keydown', onEscapeKeyDownForSuccessMessage);
   const successPopup = document.querySelector('.success');
   successPopup.remove();
@@ -78,7 +78,7 @@ const closeSuccessPopup = () => {
 const onOutSideSuccessClick = (evt) => {
   const successPopup = document.querySelector('.success__inner');
   if (evt.target !== successPopup) {
-    closeSuccessPopup();
+    onCloseSuccessPopupClick();
   }
 };
 
@@ -88,7 +88,7 @@ const showSuccessSendData = () => {
   // Клонируем шаблон
   const messageTemp = successMessageTemplate.cloneNode(true);
   // Находим кнопку и вешаем на неё обработчик событий по клику
-  messageTemp.querySelector('.success__button').addEventListener('click', closeSuccessPopup);
+  messageTemp.querySelector('.success__button').addEventListener('click', onCloseSuccessPopupClick);
   // Обработчик событий по нажатию ESC
   document.addEventListener('keydown', onEscapeKeyDownForSuccessMessage);
   // O,hf,jnxbr события по клику
@@ -102,7 +102,7 @@ const showSuccessSendData = () => {
 function onEscapeKeyDownForSuccessMessage(evt) {
   if (isEscapeKeydown(evt)) {
     evt.preventDefault();
-    closeSuccessPopup();
+    onCloseSuccessPopupClick();
   }
 }
 
