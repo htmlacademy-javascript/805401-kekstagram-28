@@ -44,5 +44,3 @@ const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POS
 // экспорты функций
 
 export { getData, sendData };
-
-

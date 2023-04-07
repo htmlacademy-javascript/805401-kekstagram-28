@@ -2,6 +2,7 @@
 
 import { isEscapeKeydown } from './util.js';
 
+const DELAY_TIME = 5000;
 // Шаблон ошибки
 const errorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
 // Шаблон успешной отправки
@@ -23,7 +24,7 @@ const showErrorGetData = (error) => {
   document.body.append(messageTemp);
   setTimeout(() => {
     messageTemp.remove();
-  }, 5000);
+  }, DELAY_TIME);
 };
 
 // Функция закрывает окно ошибки
