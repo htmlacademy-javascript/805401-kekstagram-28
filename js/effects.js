@@ -1,6 +1,5 @@
-// Настройки фильтров
-const FILTER_EFFECTS = [
-  {
+const FILTER_EFFECTS = {
+  none: {
     NAME: 'none',
     FILTER: 'none',
     RANGE: {
@@ -10,7 +9,7 @@ const FILTER_EFFECTS = [
     STEP: 1,
     UNIT: ''
   },
-  {
+  chrome: {
     NAME: 'chrome',
     FILTER: 'grayscale',
     RANGE: {
@@ -20,7 +19,7 @@ const FILTER_EFFECTS = [
     STEP: 0.1,
     UNIT: ''
   },
-  {
+  sepia: {
     NAME: 'sepia',
     FILTER: 'sepia',
     RANGE: {
@@ -30,7 +29,7 @@ const FILTER_EFFECTS = [
     STEP: 0.1,
     UNIT: ''
   },
-  {
+  marvin: {
     NAME: 'marvin',
     FILTER: 'invert',
     RANGE: {
@@ -40,7 +39,7 @@ const FILTER_EFFECTS = [
     STEP: 1,
     UNIT: '%'
   },
-  {
+  phobos: {
     NAME: 'phobos',
     FILTER: 'blur',
     RANGE: {
@@ -50,7 +49,7 @@ const FILTER_EFFECTS = [
     STEP: 0.1,
     UNIT: 'px'
   },
-  {
+  heat: {
     NAME: 'heat',
     FILTER: 'brightness',
     RANGE: {
@@ -60,9 +59,9 @@ const FILTER_EFFECTS = [
     STEP: 0.1,
     UNIT: ''
   }
-];
+};
 // Значение по умолчанию
-const DEFAULT_EFFECT = FILTER_EFFECTS[0];
+const DEFAULT_EFFECT = FILTER_EFFECTS.none;
 
 // Загруженная картинка
 const previewPhotoImg = document.querySelector('.img-upload__preview img');
@@ -116,7 +115,7 @@ const onEffectChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
-  currentEffect = FILTER_EFFECTS.find((effect) => effect.NAME === evt.target.value);
+  currentEffect = FILTER_EFFECTS[evt.target.value];
   previewPhotoImg.className = `effects__preview--${currentEffect.NAME}`;
   updateSlider();
 };
