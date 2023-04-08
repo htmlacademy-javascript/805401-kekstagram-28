@@ -33,6 +33,14 @@ const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
 //кнопка отправки формы
 const submitButton = document.querySelector('.img-upload__submit');
 
+// Валидация формы Pristine
+
+const pristine = new Pristine(imgUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
+});
+
 // Функция открывает форму для редактирования фото
 
 const onOpenImgUploadForm = () => {
@@ -47,6 +55,7 @@ const onCloseImgUploadForm = () => {
   resetScale();
   resetEffect();
   imgUploadForm.reset();
+  pristine.reset();
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onCloseImgUploadFormKeydown);
@@ -64,14 +73,6 @@ function onCloseImgUploadFormKeydown(evt) {
     onCloseImgUploadForm();
   }
 }
-
-// Валидация формы Pristine
-
-const pristine = new Pristine(imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
-});
 
 // Функция форматирует данные для проверки
 
