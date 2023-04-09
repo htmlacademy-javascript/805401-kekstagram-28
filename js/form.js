@@ -68,7 +68,8 @@ const isFieldInFocus = () => document.activeElement === hashtagInput || document
 // Функция закрывает окно при нажатии кнопки Esc
 
 function onCloseImgUploadFormKeydown(evt) {
-  if (isEscapeKeydown(evt) && !isFieldInFocus()) {
+  const errorPopup = document.querySelector('.error');
+  if (!errorPopup && isEscapeKeydown(evt) && !isFieldInFocus()) {
     evt.preventDefault();
     onCloseImgUploadForm();
   }
