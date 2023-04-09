@@ -73,6 +73,7 @@ const renderComments = (comments) => {
   if (visibleCommentsCount >= comments.length) {
     visibleCommentsCount = comments.length;
     elements.btnCommentsLoader.classList.add('hidden');
+    elements.btnCommentsLoader.removeEventListener('click', onAddMoreCommentsClick);
   } else {
     elements.btnCommentsLoader.classList.remove('hidden');
     elements.btnCommentsLoader.addEventListener('click', onAddMoreCommentsClick, { once: true });
