@@ -111,9 +111,9 @@ const isHashtagNotDouble = (value) => {
 
 // Создаём валидаторы
 
-pristine.addValidator(hashtagInput, isValidationHashtag, 'Неправильно введен #хэш-тег!');
-pristine.addValidator(hashtagInput, isNumberOfHashtags, `Нельзя ввести больше ${HASHTAG_MAX_COUNT} #хэш-тегов`);
-pristine.addValidator(hashtagInput, isHashtagNotDouble, 'Такой #хэш-тег уже существует, введите уникальный хештег');
+pristine.addValidator(hashtagInput, isValidationHashtag, 'Неправильно введен #хэш-тег!', 3 , true);
+pristine.addValidator(hashtagInput, isNumberOfHashtags, `Нельзя ввести больше ${HASHTAG_MAX_COUNT} #хэш-тегов`, 2 ,true);
+pristine.addValidator(hashtagInput, isHashtagNotDouble, '#хэш-тег не должен повторятся, введите уникальный хештег', 1 , true);
 
 // Открываем формы при выборе фото
 imgUploadFile.addEventListener('change', onOpenImgUploadForm);
