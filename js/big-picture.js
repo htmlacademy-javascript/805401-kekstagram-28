@@ -4,8 +4,6 @@ import { isEscapeKeydown } from './util.js';
 
 // Количество видимых комментариев
 const VISIBLE_COMMENT = 5;
-// Счетчик видимых комментариев
-let visibleCommentsCount = VISIBLE_COMMENT;
 
 const elements = {
   body: document.querySelector('body'),
@@ -32,6 +30,9 @@ const elements = {
   // Кнопка загрузить еще коментарии
   btnCommentsLoader: document.querySelector('.comments-loader'),
 };
+
+// Счетчик видимых комментариев
+let visibleCommentsCount = VISIBLE_COMMENT;
 
 // Функция создающая шаблон
 
