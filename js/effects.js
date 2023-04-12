@@ -60,39 +60,27 @@ const FILTER_EFFECTS = {
     UNIT: ''
   }
 };
-// Значение по умолчанию
+
 const DEFAULT_EFFECT = FILTER_EFFECTS.none;
 
-// Загруженная картинка
 const previewPhotoImg = document.querySelector('.img-upload__preview img');
-//список эффектов
 const filtersEffectList = document.querySelector('.effects__list');
-// Слайдер
 const filtersEffectSlider = document.querySelector('.effect-level__slider');
-// Значение слайдера
 const filtersEffectValue = document.querySelector('.effect-level__value');
-// Контейнер слайдера
 const filtersEffectLevel = document.querySelector('.img-upload__effect-level');
-// Текущее значение
-let currentEffect = DEFAULT_EFFECT;
 
-// Функция приравнивает к значению по умолчанию
+let currentEffect = DEFAULT_EFFECT;
 
 const isDefault = () => currentEffect === DEFAULT_EFFECT;
 
-// Функция добавляет слайдер
 
 const addSlider = () => {
   filtersEffectLevel.classList.remove('hidden');
 };
 
-// Функция убирает слайдер
-
 const removeSlider = () => {
   filtersEffectLevel.classList.add('hidden');
 };
-
-// Функция обнавляет слайдер
 
 const updateSlider = () => {
   filtersEffectSlider.noUiSlider.updateOptions({
@@ -108,9 +96,6 @@ const updateSlider = () => {
   }
 };
 
-
-// Функция изменения эффектов
-
 const onEffectChange = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
@@ -120,24 +105,16 @@ const onEffectChange = (evt) => {
   updateSlider();
 };
 
-
-// Функция обнавляет положение ползунка слайдера
-
 const onSliderUpdate = () => {
   const sliderValue = filtersEffectSlider.noUiSlider.get();
   filtersEffectValue.value = sliderValue;
   previewPhotoImg.style.filter = isDefault() ? DEFAULT_EFFECT.FILTER : `${currentEffect.FILTER}(${sliderValue}${currentEffect.UNIT})`;
 };
 
-
-// Функция сбрасывает эффекты по умолчанию
-
 const resetEffect = () => {
   currentEffect = DEFAULT_EFFECT;
   updateSlider();
 };
-
-// Создаём слайдер
 
 noUiSlider.create(filtersEffectSlider, {
   range: DEFAULT_EFFECT.RANGE,
@@ -157,14 +134,9 @@ noUiSlider.create(filtersEffectSlider, {
   },
 });
 
-// Убираем слайдер
 removeSlider();
 
-// Обработчик события изменения эффектов
 filtersEffectList.addEventListener('change', onEffectChange);
-// Обработчик событий на слайдер
 filtersEffectSlider.noUiSlider.on('update', onSliderUpdate);
-
-// Экспорты функций
 
 export { resetEffect };

@@ -1,9 +1,6 @@
-// Расширения файлов доступных для загрузки
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-// Поле ввода для загрузки изображения
 const fileChooser = document.querySelector('.img-upload__input');
-// Контейнер предварительного просмотра изображения
 const preview = document.querySelector('.img-upload__preview img');
 
 const selectPictureToPreview = () => {
