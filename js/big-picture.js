@@ -33,7 +33,7 @@ const elements = {
 
 // Счетчик видимых комментариев
 let visibleCommentsCount = VISIBLE_COMMENT;
-
+let currentComments = [];
 // Функция создающая шаблон
 
 const createComment = ({ avatar, name, message }) => {
@@ -50,17 +50,12 @@ const createComment = ({ avatar, name, message }) => {
   return commentElement;
 };
 
-const renderComments = (comments) => {
+const renderComments = (comments,) => {
   // создаём фрагмент
   const commentsFragment = document.createDocumentFragment();
 
   // Функция добовляет больше комментариев
 
-  const onAddMoreCommentsClick = () => {
-    // обновляем счетчик комментариев
-    visibleCommentsCount += VISIBLE_COMMENT;
-    renderComments(comments);
-  };
   // Возвращаем новый массив
   comments.slice(0, visibleCommentsCount).forEach((comment) => {
     commentsFragment.append(createComment(comment));
@@ -70,17 +65,21 @@ const renderComments = (comments) => {
   // Отрисовываем
   elements.socialComments.append(commentsFragment);
 
-  // Условия показа кнопки и счетчика комментариев
-  if (visibleCommentsCount >= comments.length) {
-    visibleCommentsCount = comments.length;
-    elements.btnCommentsLoader.classList.add('hidden');
-    elements.btnCommentsLoader.removeEventListener('click', onAddMoreCommentsClick);
-  } else {
-    elements.btnCommentsLoader.classList.remove('hidden');
-    elements.btnCommentsLoader.addEventListener('click', onAddMoreCommentsClick, { once: true });
-  }
+
   // Отображаем количество отрисованных комментариев
   elements.socialCommentCount.textContent = `${visibleCommentsCount} из ${comments.length} комментариев`;
+};
+
+const onAddMoreCommentsClick = () => {
+  // обновляем счетчик комментариев
+  visibleCommentsCount += VISIBLE_COMMENT;
+  // Условия показа кнопки и счетчика комментариев
+  if (visibleCommentsCount >= currentComments.length) {
+    visibleCommentsCount = currentComments.length;
+    elements.btnCommentsLoader.classList.add('hidden');
+    elements.btnCommentsLoader.removeEventListener('click', onAddMoreCommentsClick);
+  }
+  renderComments(currentComments);
 };
 
 // Функция отрисовки большого изображения
@@ -102,6 +101,17 @@ const renderBigPicture = ({
   elements.socialCaption.textContent = description;
   elements.commentsCount.textContent = comments.length;
 
+  currentComments = comments;
+
+  // Условия показа кнопки и счетчика комментариев
+  if (comments.length <= VISIBLE_COMMENT) {
+    visibleCommentsCount = comments.length;
+    elements.btnCommentsLoader.classList.add('hidden');
+  } else {
+    elements.btnCommentsLoader.classList.remove('hidden');
+    elements.btnCommentsLoader.addEventListener('click', onAddMoreCommentsClick);
+  }
+
   // Отрисовываем комментарии
   renderComments(comments);
 };
@@ -111,6 +121,7 @@ const renderBigPicture = ({
 const removeClickAndKeydownBigPicture = () => {
   document.removeEventListener('keydown', onCloseBigPictureKeydown);
   elements.btnCloseBigPicture.removeEventListener('click', onCloseBigPictureClick);
+  elements.btnCommentsLoader.removeEventListener('click', onAddMoreCommentsClick);
 };
 
 // Функция открывающая большое изображение

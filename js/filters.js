@@ -49,6 +49,9 @@ const applyFilter = (pictures) => {
 
 const onFilterButtonClick = (evt, photos) => {
   const images = document.querySelectorAll('.picture');
+  if (evt.target.nodeName === 'FORM') {
+    return;
+  }
   currentButton.classList.remove('img-filters__button--active');
   currentButton = evt.target;
   currentButton.classList.add('img-filters__button--active');
